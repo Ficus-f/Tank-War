@@ -3,7 +3,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankFrame extends Frame {
-    Tank myTank;
+    private Tank myTank;
+    private Tank enemy;
 
     public TankFrame() {
         this.setTitle("tank war");
@@ -12,12 +13,14 @@ public class TankFrame extends Frame {
 
         this.addKeyListener(new TankKeyListener());
 
-        myTank = new Tank(100, 100);
+        myTank = new Tank(100, 100, Dir.R);
+        enemy = new Tank(200, 200, Dir.D);
     }
 
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        enemy.paint(g);
     }
 
     private class TankKeyListener extends KeyAdapter {
@@ -29,7 +32,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-
+            myTank.keyReleased(e);
         }
     }
 }
