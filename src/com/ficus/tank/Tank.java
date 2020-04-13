@@ -1,10 +1,16 @@
+package com.ficus.tank;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Tank {
     private int x, y;
     private Dir dir;
     private boolean bL, bU, bR, bD;
+    private boolean moving = false;
 
     public static final int SPEED = 5;
 
@@ -15,7 +21,13 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        g.fillRect(x, y, 50, 50);
+        try {
+            BufferedImage tankL = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            g.drawImage(tankL, x, y, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        g.fillRect(x, y, 50, 50);
 
         move();
     }
@@ -42,19 +54,28 @@ public class Tank {
     }
 
     private void setMainDir() {
+        //all dir keys released, tank should be stopped.
         if (!bL && !bU && !bR && !bD)
-            dir = Dir.STOP;
-        if (bL && !bU && !bR && !bD)
-            dir = Dir.L;
-        if (!bL && bU && !bR && !bD)
-            dir = Dir.U;
-        if (!bL && !bU && bR && !bD)
-            dir = Dir.R;
-        if (!bL && !bU && !bR && bD)
-            dir = Dir.D;
+            moving = false;
+        //any dir keys pressed, tank should be moving.
+        else {
+            moving = true;
+
+            if (bL && !bU && !bR && !bD)
+                dir = Dir.L;
+            if (!bL && bU && !bR && !bD)
+                dir = Dir.U;
+            if (!bL && !bU && bR && !bD)
+                dir = Dir.R;
+            if (!bL && !bU && !bR && bD)
+                dir = Dir.D;
+        }
+
     }
 
     private void move() {
+        if (!moving) return;
+
         switch (dir) {
             case L:
                 x -= SPEED;
