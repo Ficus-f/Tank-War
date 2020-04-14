@@ -21,13 +21,20 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        try {
-            BufferedImage tankL = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
-            g.drawImage(tankL, x, y, null);
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (dir) {
+            case L:
+                g.drawImage(ResourceMgr.goodTankL, x, y, null);
+                break;
+            case U:
+                g.drawImage(ResourceMgr.goodTankU, x, y, null);
+                break;
+            case R:
+                g.drawImage(ResourceMgr.goodTankR, x, y, null);
+                break;
+            case D:
+                g.drawImage(ResourceMgr.goodTankD, x, y, null);
+                break;
         }
-//        g.fillRect(x, y, 50, 50);
 
         move();
     }
