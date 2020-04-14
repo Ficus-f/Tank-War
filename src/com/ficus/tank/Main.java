@@ -2,8 +2,8 @@ package com.ficus.tank;
 
 public class Main {
     public static void main(String[] args) {
-        TankFrame tf = new TankFrame();
-        tf.setVisible(true);
+
+        TankFrame.INSTANCE.setVisible(true);
 
         for (; ; ) {
             try {
@@ -12,7 +12,7 @@ public class Main {
                 e.printStackTrace();
             }
 
-            tf.repaint();
+            TankFrame.INSTANCE.repaint();
         }
     }
 }

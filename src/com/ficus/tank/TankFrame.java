@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankFrame extends Frame {
+    public static final TankFrame INSTANCE = new TankFrame();
+
     private Tank myTank;
     private Tank enemy;
     private Bullet bullet;
@@ -12,15 +14,15 @@ public class TankFrame extends Frame {
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
 
-    public TankFrame() {
+    private TankFrame() {
         this.setTitle("tank war");
         this.setLocation(400, 100);
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
 
         this.addKeyListener(new TankKeyListener());
 
-        myTank = new Tank(100, 100, Dir.R, Group.GOOD, this);
-        enemy = new Tank(200, 200, Dir.D, Group.BAD, this);
+        myTank = new Tank(100, 100, Dir.R, Group.GOOD);
+        enemy = new Tank(200, 200, Dir.D, Group.BAD);
         bullet = new Bullet(100, 100, Dir.D, Group.GOOD);
     }
 
