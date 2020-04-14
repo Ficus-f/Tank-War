@@ -3,6 +3,8 @@ package com.ficus.tank;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankFrame extends Frame {
     public static final TankFrame INSTANCE = new TankFrame();
@@ -10,6 +12,8 @@ public class TankFrame extends Frame {
     private Tank myTank;
     private Tank enemy;
     private Bullet bullet;
+
+    private List<Bullet> bullets;
 
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
@@ -23,18 +27,21 @@ public class TankFrame extends Frame {
 
         myTank = new Tank(100, 100, Dir.R, Group.GOOD);
         enemy = new Tank(200, 200, Dir.D, Group.BAD);
-        bullet = new Bullet(100, 100, Dir.D, Group.GOOD);
+        bullets = new ArrayList<Bullet>();
     }
 
     public void add(Bullet bullet) {
-        this.bullet = bullet;
+        bullets.add(bullet);
     }
 
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
         enemy.paint(g);
-        bullet.paint(g);
+
+        for (int i=0; i<bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
     }
 
     Image offScreenImage = null;
