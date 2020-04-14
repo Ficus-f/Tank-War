@@ -11,29 +11,52 @@ public class Tank {
     private Dir dir;
     private boolean bL, bU, bR, bD;
     private boolean moving = false;
+    private Group group;
+
+    private TankFrame tf;
 
     public static final int SPEED = 5;
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {
-        switch (dir) {
-            case L:
-                g.drawImage(ResourceMgr.goodTankL, x, y, null);
-                break;
-            case U:
-                g.drawImage(ResourceMgr.goodTankU, x, y, null);
-                break;
-            case R:
-                g.drawImage(ResourceMgr.goodTankR, x, y, null);
-                break;
-            case D:
-                g.drawImage(ResourceMgr.goodTankD, x, y, null);
-                break;
+        if (this.group == Group.GOOD){
+            switch (dir) {
+                case L:
+                    g.drawImage(ResourceMgr.goodTankL, x, y, null);
+                    break;
+                case U:
+                    g.drawImage(ResourceMgr.goodTankU, x, y, null);
+                    break;
+                case R:
+                    g.drawImage(ResourceMgr.goodTankR, x, y, null);
+                    break;
+                case D:
+                    g.drawImage(ResourceMgr.goodTankD, x, y, null);
+                    break;
+            }
+        }
+        if (this.group == Group.BAD) {
+            switch (dir) {
+                case L:
+                    g.drawImage(ResourceMgr.badTankL, x, y, null);
+                    break;
+                case U:
+                    g.drawImage(ResourceMgr.badTankU, x, y, null);
+                    break;
+                case R:
+                    g.drawImage(ResourceMgr.badTankR, x, y, null);
+                    break;
+                case D:
+                    g.drawImage(ResourceMgr.badTankD, x, y, null);
+                    break;
+            }
         }
 
         move();
@@ -114,8 +137,16 @@ public class Tank {
             case KeyEvent.VK_DOWN:
                 bD = false;
                 break;
+            case KeyEvent.VK_CONTROL:
+                fire();
+                break;
         }
 
         setMainDir();
+    }
+
+    private void fire() {
+
+        tf.add(new Bullet(x, y, dir, group));
     }
 }

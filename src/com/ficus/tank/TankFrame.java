@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 public class TankFrame extends Frame {
     private Tank myTank;
     private Tank enemy;
+    private Bullet bullet;
 
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
@@ -18,14 +19,20 @@ public class TankFrame extends Frame {
 
         this.addKeyListener(new TankKeyListener());
 
-        myTank = new Tank(100, 100, Dir.R);
-        enemy = new Tank(200, 200, Dir.D);
+        myTank = new Tank(100, 100, Dir.R, Group.GOOD, this);
+        enemy = new Tank(200, 200, Dir.D, Group.BAD, this);
+        bullet = new Bullet(100, 100, Dir.D, Group.GOOD);
+    }
+
+    public void add(Bullet bullet) {
+        this.bullet = bullet;
     }
 
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
         enemy.paint(g);
+        bullet.paint(g);
     }
 
     Image offScreenImage = null;
